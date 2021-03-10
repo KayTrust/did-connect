@@ -107,17 +107,4 @@ Below are examples of Authorization Servers.
 
 ## Current limitations
 
-### Variable flow support
-
-Some web, mobile and desktop applications, called "DApps", have the following characteristics:
-- They run on the user's device, usually hidden by an IPv4 home network's NAT or mobile carrier network, and thus don't have an IP address with a TCP port open on the public internet.
-- They don't use a backend API.
-
-When used as an Authorization Server, a DApp won't be able to easily provide a Token Endpoint and support response types that include the `code` keyword, leaving support only for `id_token` and `token id_token` response types. If the AS doesn't support the requested response type, it must return an `error=unsupported_response_type` to the client, per the OAuth 2.0 specification.
-
-This uncertainty represents both a risk of failure and added out-of-band work for the client to try and guess what flow to request.
-
-Possible workarounds include:
-- An `Accept-DIDConnect-Response-Type` HTTP header provided by the RO's user agent to the RP, so that the RP may decide what flow to request. One downside of this approach is that it requires user-agent support. Another downside is that it bloats all requests sent by the user agent to all websites, as the user agent can't know in advance which websites will need that information.
-- Sending a second request with a different response type if the AS returned an `unsupported_response_type` error to the first request. One downside is poor user experience, as the user will have to interact twice with the RP.
-- Introducing new `response_type` values such as `code,id_token` and `code,token`, whose respective meanings are "code, otherwise id_token" and "code, otherwise token".
+See ["must address" issues](https://github.com/KayTrust/did-connect/labels/must%20address).
