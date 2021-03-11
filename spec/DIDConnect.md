@@ -1,5 +1,11 @@
 # OpenID Connect Profile for self-sovereign identity (DIDConnect)
 
+## Copyright information
+
+Copyright (c) 2021 everis and its authors.
+
+This document is made available under the terms of the [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) license, meaning you are free to share it and build upon it.
+
 ## Introduction
 
 This document describes a method, nicknamed "DID Connect", to authenticate a user against their [Decentralized Identifier (DID)](https://www.w3.org/TR/did-core/). This method uses [OpenID Connect (OIDC)](https://openid.net/developers/specs/), which itself builds upon the [OAuth 2.0 framework](https://tools.ietf.org/html/rfc6749).
