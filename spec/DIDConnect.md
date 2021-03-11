@@ -4,7 +4,7 @@
 
 Copyright (c) 2021 everis and its authors.
 
-This document is made available under the terms of the [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) license, meaning you are free to share it and build upon it.
+This document is made available under the terms of the [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) license, meaning you are free to share it and build upon it as long as you give proper attribution.
 
 ## Introduction
 
