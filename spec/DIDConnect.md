@@ -14,17 +14,15 @@ The objective of DID Connect is to extend OIDC in a way that makes it as resourc
 
 | Aspect                    | Provider-Centric Identity          | Self-Sovereign Identity
 | ------------------------- | ------------------------- | -----------------------
-| Subject ID (`sub`)               | IdP-assigned.         | User's DID.
-| Client registration flow  | Client registers against IdP (must be authorized by IdP).           | No authorization needed by a central entity for acting as a client. Authorization is whatever set of Verifiable Credentials the client is able to present.
-| Client information        | Held and shown by IdP.       | Verifiable Presentation, containing Verifiable Credentials issued by any relevant authorities.
+| Subject ID (`sub`)        | IdP-assigned.             | User's DID.
+| Client registration       | Client registers against IdP (must be authorized by IdP).           | No authorization needed by a central entity for acting as a client. Authorization is whatever set of Verifiable Credentials the client is able to present.
+| Client information        | Held and shown by IdP.       | Verifiable Presentation, available on the internet, containing Verifiable Credentials issued by any relevant authorities.
 | Client ID                 | IdP-assigned. | URL of the Verifiable Presentation.
-| Authorization Server      | Identity Provider (IdP), known by the Relying Party before creating the request.   | Chosen by user during authentication. Examples: user's own identity wallet, or a web application.
-| Authorization endpoint    | Contains the Identity Provider (IdP)'s hostname. Either static or discovered through OIDC Discovery. | Custom scheme (`didconnect:`).
-| Token endpoint (when applicable)           | Contains the Identity Provider (IdP)'s hostname. Either static or discovered through OIDC Discovery. | Provided as `token_uri` parameter in the authorization response. (**WIP**.)
-| Userinfo endpoint           | Managed by IdP. Either static or discovered through OIDC Discovery.   | Contained in `id_token` (`userinfo` claim).
-| Public key for id_token's signature by client | Either static or discovered through OIDC Discovery. | Listed in DID Document (DDO).
-| Client's whitelisted redirect_uri endpoints | Registered and checked by the IdP. | Announced as a claim in the Client ID's Verifiable Presentation.
-| Supported flows | Either static or discovered through OIDC Discovery. | Negotiated during authentication (**WIP**).
+| Authorization endpoint    | Contains the Identity Provider (IdP)'s hostname. Either static or discovered through OIDC Discovery. | Optional use of a custom scheme (`didconnect:`).
+| Token endpoint            | Contains the Identity Provider (IdP)'s hostname. Either static or discovered through OIDC Discovery. | Optional discovery as a `token_uri` parameter in the authorization response. (**WIP**.)
+| Userinfo endpoint         | Managed by IdP. Either static or discovered through OIDC Discovery.   | Contained in `id_token` (`userinfo` claim).
+| id_token signing key      | Static, with optional OIDC Discovery. | Checked against DID Document (DDO).
+| redirect_uri endpoints    | Registered and checked by the IdP. | Listed as a claim in the Client ID's Verifiable Presentation.
 
 ## General flow
 
@@ -51,11 +49,11 @@ Specificities on how those steps are to be applied for DIDConnect are detailed i
 
 ### 2. Authentication request
 
-An authentication request is a URL of the following form: `didconnect://auth?...` with the same query parameters as defined in the OIDC specification. The value of `client_id` is the one obtained during registration.
+A DID Connect authentication request is a normal OpenID Connect URL, but with a specific value of `did` for the `scope` parameter. The value for the `client_id` parameter is the URL-encoded VP URL obtained during registration.
 
 ### 3. Obtaining user consent from AS
 
-When a user's Authorization Server receives a request from the application's client_id, it must treat `client_id` as an URL and fetch the Verifiable Presentation (VP) from it. Then, the AS must check the following conditions:
+When the Authorization Server receives a request from the application's client_id, it must treat `client_id` as an URL and fetch the Verifiable Presentation (VP) from it. Then, the AS must check the following conditions:
 
 - The VP's proof is valid.
 - The VP is within validity date.
@@ -100,11 +98,27 @@ If an access token was provided, the client can access user's information by que
 
 The response is a Verifiable Presentation. The presentation must be valid (proof-wise), within validity dates, and the presentation's holder must be the user's authenticated DID.
 
-## Registration of custom scheme by Authorization Server applications
+## Bring your own AS: `didconnect:` custom scheme
 
-This specification describes the use of a custom URI scheme to express authorization requests, very much like the use of `mailto:` or `tel:` URI schemes. This makes it possible for any registered application on the user agent to handle requests after registering itself for the `didconnect:` custom scheme on the RO's operating system.
+In decentralized authentication scenarios, the Relying Party doesn't always know in advance what Authorization Server the user will want to use. Sometimes that AS can even be a special application such as a mobile application, that doesn't have endpoints open on the internet. This is why this specification allows a new custom URI scheme and path: `didconnect://auth`.
 
-Below are examples of Authorization Servers.
+### Example
+
+The following example shows a decentralized authentication request URI. The newlines are for legibility only.
+
+```
+didconnect://auth?
+  client_id=https%3A%2F%2Fexample.com%2Frelyingparty.vp&
+  scope=did%20something&
+  redirect_uri=https%3A%2F%2Fexample.com%2Flogin&
+  state=xxx
+```
+
+### Registration of custom scheme by Authorization Server applications
+
+Any application may register itself for the `didconnect:` custom scheme on the Ressource Owner's operating system, so as to be handed future authentication requests.
+
+Below are examples of Authorization Servers and how they typically register.
 
 | AS implementation | Custom scheme registration |
 |--|--|
