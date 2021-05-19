@@ -52,6 +52,7 @@ Specificities on how those steps are to be applied for DIDConnect are detailed i
 ### 2. Authentication request
 
 An authentication request is a URL of the following form: `didconnect://auth?...` with the same query parameters as defined in the OIDC specification. The value of `client_id` is the one obtained during registration.
+It is worth mentioning that all authorization flows, according to openid-connect, are supported; but not all Authorization servers will support all of these flows.
 
 ### 3. Obtaining user consent from AS
 
