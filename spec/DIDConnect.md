@@ -19,7 +19,7 @@ The objective of DID Connect is to extend OIDC in a way that makes it resource-o
 | `scope` in requests       | `scope=openid`            | `scope=did`
 | Client registration flow  | Client registers against IdP (must be authorized by IdP).           | No authorization needed by a central entity.
 | Client ID                 | IdP-assigned. | URL of a Verifiable Presentation controlled by the client.
-| Authorization endpoint    | Contains the Identity Provider (IdP)'s hostname. Either static or discovered through OIDC Discovery. | Custom scheme (`didconnect:`).
+| Authorization endpoint    | Contains the Identity Provider (IdP)'s hostname. Either static or discovered through OIDC Discovery. | Optional use of custom scheme (`didconnect:`).
 | Userinfo endpoint           | Managed by IdP. Either static or discovered through OIDC Discovery.   | Contained in `id_token` (`userinfo` claim).
 | Client information        | Held and shown by IdP.       | Verifiable Presentation, containing Verifiable Credentials issued by any relevant authorities.
 | Public key of token's issuer | Either static or discovered through OIDC Discovery. | Listed in DID Document (DDO).
