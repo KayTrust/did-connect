@@ -45,7 +45,7 @@ Specificities on how those steps are to be applied for DIDConnect are detailed i
 
 1. Relying Party obtains a DID.
 2. RP obtains Verifiable Credentials whose subject is the RP's DID, and issued by entities trusted by the targeted users. How users should trust the RP's DID and/or credentials is outside the scope of this specification. The credentials should typically claim information about the RP, such as the application's name, originating organization, logo, website, etc, but the semantics of such claims is also outside the scope of this specification.
-3. RP obtains a Verifiable Credential whose subject is the RP's DID, and containing the claim `redirect_uri` with the value of whitelisted callback URL(s). Like the previous point, how the AS should trust that credential is not defined in this document. However, it is recommended that the credential is self-issued, i.e. the issuer is also the RP's DID.
+3. RP obtains a Verifiable Credential whose subject is the RP's DID, and containing the claim `response_uri` with the value of whitelisted callback URL(s). Like the previous point, how the AS should trust that credential is not defined in this document. However, it is recommended that the credential is self-issued, i.e. the issuer is also the RP's DID.
 4. RP creates a Verifiable Presentation containing those credentials, and whose holder is the RP's DID.
 5. The Verifiable Presentation is available at a location where users will be able to access it. The RP's Client ID is the presentation's URL.
 
@@ -61,11 +61,11 @@ When a user's Authorization Server receives a request from the application's cli
 
 - The VP's proof is valid.
 - The VP is within validity date.
-- The `redirect_uri` value from the authentication request matches one of the values present in the VP's _valid credentials_.
+- The `redirect_uri` value from the authentication request matches one of the `response_uri` claims in the VP's _valid credentials_.
 
 Then, the AS should ask for user's consent after displaying all relevant claims, based on _valid credentials_.
 
-Note: For `redirect_uri` and displayed claims, **_valid credentials_** are credentials with a valid proof, that are within validity dates, and whose subject ID is the same as the VP's holder.
+Note: For `response_uri` and displayed claims, **_valid credentials_** are credentials with a valid proof, that are within validity dates, and whose subject ID is the same as the VP's holder.
 
 ### 4. Token generation
 
