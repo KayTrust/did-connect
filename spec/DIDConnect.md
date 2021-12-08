@@ -6,6 +6,14 @@ Copyright (c) 2021 NTT DATA and its authors.
 
 This document is made available under the terms of the [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) license, meaning you are free to share it and build upon it as long as you give proper attribution.
 
+# Motivation
+
+[OpenID Connect (OIDC)](https://openid.net/developers/specs/) does a great job at letting users authenticate thanks to the role of an Identity Provider trusted by the Relying Party. However, this scheme has led to the apparition of near-monopolistic providers, as there is a conflict of interests for the Internet community between keeping things decentralized and developers not having to trust a large number of Identity Providers.
+
+The recent developments around Decentralized Identifiers introduce an opportunity to solve that conflict of interests. It lets each user act as their own Identity Provider, by signing the identity token with the key of their choice after declaring that provider's public key in the DID Document.
+
+In addition, that decentralization allows for native or mobile implementations of Identity Providers, so there should be a way to make an identity request without assuming the actual location of the Identity Provider – just like "mailto:" URIs let users free to pick whatever SMTP server they want to send an email, as opposed to what would be presenting a full HTTP endpoint.
+
 ## Introduction
 
 This document describes a method, called "DID Connect" or "DIDC", to authenticate a user with their [Decentralized Identifier (DID)](https://www.w3.org/TR/did-core/). This method builds upon [OpenID Connect (OIDC)](https://openid.net/developers/specs/), so familiarity with OIDC is recommended.
