@@ -25,22 +25,22 @@ The objective of DID Connect is to extend OIDC in a way that makes it resource-o
 | Control                   | Provider-centric          | User-centric
 | Subject ID (`sub`)        | IdP-assigned (locally unique)             | User's DID (globally unique)
 | `scope` in requests       | `scope=openid`            | `scope=did`
-| Client registration flow  | Client registers against IdP (must be authorized by IdP).           | No authorization needed by a central entity.
-| Client ID                 | IdP-assigned. | URL of a Verifiable Presentation controlled by the client.
 | Authorization endpoint    | Contains the Identity Provider (IdP)'s hostname. Either static or discovered through OIDC Discovery. | Optional use of custom scheme (`didconnect:`).
-| Userinfo endpoint           | Managed by IdP. Either static or discovered through OIDC Discovery.   | Contained in `id_token` (`userinfo` claim).
-| Client information        | Held and shown by IdP.       | Verifiable Presentation, containing Verifiable Credentials issued by any relevant authorities.
-| Public key of token's issuer | Either static or discovered through OIDC Discovery. | Listed in DID Document (DDO).
-| Client's whitelisted redirect_uri endpoints | Registered and checked by the IdP. | Announced as a claim in the Client ID's Verifiable Presentation.
-| Supported flows | Either static or discovered through OIDC Discovery. | Negotiated during authentication (**WIP**).
+| Token signing key         | Either static or listed through OIDC Discovery. | Present in DID Document, resolved dynamically through DID resolution.
+| Relying Party registration flow  | RP is created by IdP.           | Autonomous generation of a Verifiable Presentation.
+| RP's Client ID                 | IdP-assigned. | URL of a Verifiable Presentation controlled by the RP.
+| RP information            | Held and shown by IdP.       | Verifiable Presentation, containing Verifiable Credentials issued by any relevant authorities.
+| RP's whitelisted redirect_uri endpoints | Registered and checked by the IdP. | Announced as a claim in the Client ID (which is a Verifiable Presentation).
+| Userinfo endpoint         | Managed by IdP. Either static or discovered through OIDC Discovery.   | Contained in `id_token` (`userinfo` claim).
+| Supported flows           | Either static or discovered through OIDC Discovery. | Negotiated during authentication (**WIP**).
 
 ## Concepts
 
 A few concepts in DID Connect differ from the OIDC ones.
 
-### Client registration and client ID
+### Relying Party registration and Client ID
 
-Client registration in DID Connect is as decentralized as publishing any content on the Internet. The Relying Party issues a Verifiable Presentation containing any Verifiable Credentials that it wishes to present to the user's Identity Provider.
+Relying Praty registration in DID Connect is as decentralized as publishing any content on the Internet. The Relying Party issues a Verifiable Presentation containing any Verifiable Credentials that it wishes to present to the user's Identity Provider.
 
 The Verifiable Presentation MUST contain a valid proof and MUST be within validity dates at the time of the request. Its holder is considered the Relying Party's DID.
 
@@ -77,9 +77,9 @@ A DID Connect userinfo response is a Verifiable Presentation. The presentation m
 
 ## Decentralized URI scheme for authorization endpoint
 
-In some cases, the RP wants to let the user authenticate using a native or mobile wallet rather than a web application. This is possible because, unlike OIDC, the tokens are issued by the user rather than a central identity provider.
+In some cases, the RP wants to let the user authenticate using the wallet application of their choice. This is possible because, unlike OIDC, the tokens are issued by the user rather than a central identity provider.
 
-The decentralized authorization endpoint scheme is `didconnect:`. It works similarly to schemes such as `mailto:` or `tel:`, in that any application on the user agent can register itself on the RO's operating system to handle such requests.
+Decentralized authorization is done through the endpoint scheme `didconnect:`. The idea is the same as schemes such as `mailto:` or `tel:`, in that any application on the user agent can register itself on the RO's operating system to handle such requests.
 
 Below are examples of decentralized Authorization Servers.
 
