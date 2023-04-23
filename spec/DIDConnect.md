@@ -6,6 +6,10 @@ Copyright (c) 2021 NTT DATA and its authors.
 
 This document is made available under the terms of the [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) license, meaning you are free to share it and build upon it as long as you give proper attribution.
 
+## Status
+
+This document is now abandonned. Several years after DID Connect was born, SIOPv2 has now come up with the same ideas and is backed by the larger digital identity community, so NTT DATA is now supporting SIOPv2. We encourage any project currently supporting DIDConnect to move to SIOPv2.
+
 ## Motivation
 
 [OpenID Connect (OIDC)](https://openid.net/developers/specs/) does a great job at letting users authenticate thanks to the role of an Identity Provider trusted by the Relying Party. However, this scheme has led to the apparition of near-monopolistic providers, as there is a conflict of interests for the Internet community between keeping things decentralized and developers not having to trust a large number of Identity Providers.
